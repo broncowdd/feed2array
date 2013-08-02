@@ -59,7 +59,7 @@ function feed2array($feed,$load=true){
 			if(!empty($item->summary)){			$flux['items'][$c]['description'] = (string)$item->summary;}
 			if(!empty($item->published)){		$flux['items'][$c]['date'] = (string)$item->published;}
 			if(!empty($item->update)){			$flux['items'][$c]['update'] = (string)$item->update;}
-			
+			if(!empty($item->link)){			$flux['items'][$c]['link'] = (string)$item->link;}
 		}
 	}else return false;
 	return $flux;
