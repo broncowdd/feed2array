@@ -13,8 +13,9 @@
 	# items key => array
 		# for rss type feed, each item must have the 'title', 'description', 'pubDate' and 'link' keys
 		# for atom type feed, info must have the 'title', 'id', 'updated, 'link' & 'content' keys 
+	# set "show" to false to handle the display of the feed (& content-type yourself) yourself
 
-function array2feed($array=null){
+function array2feed($array=null,$show=true){
 
 
 	if (!$array){return false;}
@@ -29,7 +30,7 @@ function array2feed($array=null){
 	$tpl['rss']['content-type']='Content-Type: application/rss+xml';
 	$tpl['atom']['content-type']='Content-Type: application/atom+xml;charset=utf-8';
 
-	header($tpl[$array['infos']['type']]['content-type']);
+	if ($show) header($tpl[$array['infos']['type']]['content-type']);
 	$feed=$tpl[$array['infos']['type']]['header'];
 		//create the feed's info content
 		foreach($array['infos'] as $key=>$value){
@@ -62,7 +63,9 @@ function array2feed($array=null){
 
 
 	$feed.=$tpl[$array['infos']['type']]['footer'];
-	return $feed;
+
+	if($show) echo $feed;
+	else return array('content-type'=>$tpl[$array['infos']['type']]['content-type'],'feed'=>$feed;
 }
 
 ?>

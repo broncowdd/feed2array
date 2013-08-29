@@ -2,9 +2,6 @@
 
 require_once('Array2feed.php');
 
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 $array=array(
     'infos'=>array(
             'type'=>'rss',
@@ -38,8 +35,13 @@ $array=array(
         )
     );
 
+//the function handles directly the display (& content-type)
+array2feed($array);
 
+//or if you want to handle the display yourself:
+// $result = array2feed($array, false);
+// header($result['content-type']);
+// echo $result['feed'];
 
-echo array2feed($array);
 
 ?>
