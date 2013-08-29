@@ -65,7 +65,7 @@ function array2feed($array=null,$show=true){
 	$feed.=$tpl[$array['infos']['type']]['footer'];
 
 	if($show) echo $feed;
-	else return array('content-type'=>$tpl[$array['infos']['type']]['content-type'],'feed'=>$feed;
+	else return array('content-type'=>$tpl[$array['infos']['type']]['content-type'],'feed'=>$feed);
 }
 
 ?>
