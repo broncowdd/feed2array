@@ -13,8 +13,9 @@
 	# items key => array
 		# for rss type feed, each item must have the 'title', 'description', 'pubDate' and 'link' keys
 		# for atom type feed, info must have the 'title', 'id', 'updated, 'link' & 'content' keys 
+	# set "show" to false to handle the display of the feed (& content-type yourself) yourself
 
-function array2feed($array=null){
+function array2feed($array=null,$show=true){
 
 
 	if (!$array){return false;}
@@ -29,7 +30,7 @@ function array2feed($array=null){
 	$tpl['rss']['content-type']='Content-Type: application/rss+xml';
 	$tpl['atom']['content-type']='Content-Type: application/atom+xml;charset=utf-8';
 
-	header($tpl[$array['infos']['type']]['content-type']);
+	if ($show) header($tpl[$array['infos']['type']]['content-type']);
 	$feed=$tpl[$array['infos']['type']]['header'];
 		//create the feed's info content
 		foreach($array['infos'] as $key=>$value){
@@ -62,44 +63,9 @@ function array2feed($array=null){
 
 
 	$feed.=$tpl[$array['infos']['type']]['footer'];
-	return $feed;
+
+	if($show) echo $feed;
+	else return array('content-type'=>$tpl[$array['infos']['type']]['content-type'],'feed'=>$feed);
 }
-
-$array=array(
-	'infos'=>array(
-			'type'=>'rss',
-			'description'=>'Ceci est le test ultime de la mort',
-			'title'=>'test de création de flux rss',
-			'link'=>'http://www.warriordudimanche.net',
-		),
-	'items'=>array(
-		0=>array(
-				'description'=>'Ceci est le premier item du flux',
-				'title'=>'item 1 : le titre',
-				'link'=>'http://www.warriordudimanche.net',
-				'guid'=>'http://www.warriordudimanche.net#1',
-				'pubDate'=>@date('r'),// Be carefull, the rss pubDate format is specific ! RFC 2822 (see http://www.faqs.org/rfcs/rfc2822.html)
-			),
-		1=>array(
-				'description'=>'Ceci est le second item du flux',
-				'title'=>'item 2 : le retour',
-				'link'=>'http://www.warriordudimanche.net',
-				'guid'=>'http://www.warriordudimanche.net#2',
-				'pubDate'=>@date('r'),
-			),
-		2=>array(
-				'description'=>'Ceci est le troisième item du flux',
-				'title'=>'item 3 : la revanche',
-				'link'=>'http://www.warriordudimanche.net',
-				'guid'=>'http://www.warriordudimanche.net#3',
-				'pubDate'=>@date('r'),
-			),
-
-		)
-	);
-
-
-
-echo array2feed($array);
 
 ?>
