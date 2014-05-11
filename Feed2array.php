@@ -64,6 +64,8 @@ function feed2array($feed,$load=true){
 				if(!empty($item->update)){			$flux['items'][$c]['update'] = (string)$item->update;}
 				if(!empty($item->content)){			$flux['items'][$c]['description'] = (string)$item->content;}
 				if(!empty($item->link)){			$flux['items'][$c]['link'] = (string)$item->link;}
+				// for the tricky <content:encoded> tag
+				if (!empty($item->children('content', true)->encoded)) {       $flux['items'][$c]['bt_content'] = (string)$item->children('content', true)->encoded; }
 			}
 			return $flux;
 		} else return false;
